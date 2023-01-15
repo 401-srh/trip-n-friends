@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:trip_app/constants.dart';
-import 'models/city.dart';
+import 'package:trip_app/controllers/constants.dart';
+import '../models/city.dart';
 import 'dart:convert';
 
-import 'models/person.dart';
+import '../models/person.dart';
 
 class ApiService {
   final BuildContext context;
   ApiService(this.context);
 
-  void _postApi(Uri url, dynamic body) async {
+  Future<void> _postApi(Uri url, dynamic body) async {
     final response = await http.post(url, body: body);
 
     if (response.statusCode != 200) {
@@ -19,9 +19,9 @@ class ApiService {
   }
 
   /// Call the API but show a snackbar if there is an error
-  bool _postApiWithFeedback(Uri uri, dynamic body) {
+  Future<bool> _postApiWithFeedback(Uri uri, dynamic body) async {
     try {
-      _postApi(uri, body);
+      await _postApi(uri, body);
       return true;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -99,8 +99,8 @@ class ApiService {
     return result;
   }
 
-  bool addPerson(Person person) {
-    return _postApiWithFeedback(
+  Future<bool> addPerson(Person person) async {
+    return await _postApiWithFeedback(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.peopleEndpoint),
         person.toJson());
   }
