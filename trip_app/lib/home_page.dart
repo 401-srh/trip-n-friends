@@ -7,8 +7,6 @@ import 'list_of_people.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  // This is a change
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
