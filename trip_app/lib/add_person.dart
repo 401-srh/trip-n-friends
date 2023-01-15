@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:trip_app/models/city.dart';
+import 'models/city.dart';
+import 'models/person.dart';
 
 List user_info = [
   'A likes Tokyo, Sydney',
   'B likes Edmonton, Toronto',
   'C likes Montreal, Vancourver'
-import 'models/person.dart';
+];
 
 //List user_info = [];
 List<Person> person_list = [
