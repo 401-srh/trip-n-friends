@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:trip_app/models/city.dart';
 
 List user_info = [
   'A likes Tokyo, Sydney',
   'B likes Edmonton, Toronto',
   'C likes Montreal, Vancourver'
+import 'models/person.dart';
+
+//List user_info = [];
+List<Person> person_list = [
+  Person(firstName: "Han", lastName: "Yan"),
+  Person(firstName: "Rajan", lastName: "Maghera"),
 ];
+
+City tokyo = City(cityName: "Tokyo", country: "Japan");
+City edm = City(cityName: "Edmonton", country: "Canada");
+City syd = City(cityName: "Sydney", country: "Australia");
+
+List<List<City>> liked_cities = [
+  [tokyo, syd],
+  [tokyo, edm]
+];
+
 TextEditingController _controller = TextEditingController();
 
 class AddPersonPage extends StatefulWidget {
