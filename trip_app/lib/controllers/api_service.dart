@@ -82,6 +82,7 @@ class ApiService {
   Future<List<Person>> getPeopleCloseTo(int id) async {
     var people = await _getApiWithFeedback(Uri.parse(
         "${ApiConstants.baseUrl}${ApiConstants.peopleCloseToEndpoint}$id/"));
+    print(people);
     if (people == null) return [];
     final List<dynamic> peopleList =
         people.map((dynamic item) => Person.fromJson(item)).toList();
