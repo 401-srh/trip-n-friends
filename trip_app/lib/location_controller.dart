@@ -1,9 +1,19 @@
 import 'package:location/location.dart';
 
 class AppLocation {
-  Future<LocationData?> getLocation() async {
-    Location location = Location();
+  static final AppLocation _instance = AppLocation._internal();
 
+  factory AppLocation() {
+    return _instance;
+  }
+
+  AppLocation._internal() {
+    location = Location();
+  }
+
+  late Location location;
+
+  Future<LocationData?> getLocation() async {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     LocationData locationData;
