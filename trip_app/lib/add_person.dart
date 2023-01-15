@@ -20,13 +20,15 @@ City syd = City(cityName: "Sydney", country: "Australia");
 
 List<List<City>> liked_cities = [
   [tokyo, syd],
-  [tokyo, edm]
+  [tokyo, edm],
+  [tokyo, syd]
 ];
 
 TextEditingController _controller = TextEditingController();
 
 class AddPersonPage extends StatefulWidget {
   const AddPersonPage({Key? key}) : super(key: key);
+  @override
   AddPerson createState() => AddPerson();
 }
 
@@ -40,7 +42,7 @@ class AddPerson extends State<AddPersonPage> {
         body: Column(
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Where do you want to go?',
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.clear),
@@ -50,17 +52,17 @@ class AddPerson extends State<AddPersonPage> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  if (_controller.text.length > 0) {
+                  if (_controller.text.isNotEmpty) {
                     user_info.add(_controller.text);
                     _controller.clear();
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Text is empty"),
                     ));
                   }
                 });
               },
-              child: Text("add"),
+              child: const Text("add"),
             ),
             Expanded(
                 child: ListView.builder(
@@ -83,7 +85,7 @@ class AddPerson extends State<AddPersonPage> {
                     children: [
                       Text(
                         "${person_list[index].firstName} ${person_list[index].lastName}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text("Liked cities: | ${cityLists[index]}")
