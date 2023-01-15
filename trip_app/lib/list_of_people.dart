@@ -59,6 +59,11 @@ class _BasicListState extends State<BasicList> {
     List<List<City>> liked = [];
     for (var user in userItems) {
       liked.add(await DataController(context).getCitiesLikedBy(user));
+      _distances.add(calculateDistance(
+          double.parse(user.latitude!),
+          double.parse(user.longitude!),
+          double.parse(userItems[0].latitude!),
+          double.parse(userItems[0].longitude!)));
     }
     setState(() {
       _person_list = userItems;
