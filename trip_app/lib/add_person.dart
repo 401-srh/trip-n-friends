@@ -11,29 +11,48 @@ class AddPersonPage extends StatelessWidget {
         title: const Text('Add Person'),
       ),
       body: Column(children: [
-        const Text('Enter your first name'),
+        const Text('First Name'),
         const TextField(
             decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'e.g. Sparsh',
+          hintText: 'Enter your first name',
         )),
-        const Text('Enter your last name'),
+        const Text('Last Name'),
         const TextField(
             decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'e.g. Thakur',
+          hintText: 'Enter your last name',
         )),
-        const Text('Enter a valid Email id'),
+        const Text('Email id'),
         const TextField(
             decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'e.g. abc@gmail.com',
+          hintText: 'Enter a valid email id',
         )),
-        const Text('Enter your phone number'),
+        const Text('Phone Number'),
         const TextField(
             decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'e.g. 123456789',
+          hintText: 'Enter your phone number',
+        )),
+        const Text('Enter city preferences'),
+        const Text('1st Preference'),
+        const TextField(
+            decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'e.g Tokyo',
+        )),
+        const Text('2nd preference'),
+        const TextField(
+            decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'e.g Sydney',
+        )),
+        const Text('3rd Preference'),
+        const TextField(
+            decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'e.g Goa',
         )),
         ElevatedButton(
             onPressed: (() => Navigator.push(context,
