@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trip_app/home_page.dart';
 import 'models/city.dart';
 import 'models/person.dart';
+import 'package:trip_app/controllers/data_controller.dart';
 
 List user_info = [
   'A likes Tokyo, Sydney',
@@ -32,6 +33,11 @@ class AddPersonPage extends StatefulWidget {
 }
 
 class AddPerson extends State<AddPersonPage> {
+  String firstName = '';
+  String lastName = '';
+  String emailID = '';
+  String phoneNumber = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,29 +46,49 @@ class AddPerson extends State<AddPersonPage> {
       ),
       body: Column(children: [
         const Text('First Name'),
-        const TextField(
+        TextField(
+            onChanged: (value) {
+              setState(() {
+                firstName = value;
+              });
+            },
             decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter your first name',
-        )),
+              border: OutlineInputBorder(),
+              hintText: 'Enter your first name',
+            )),
         const Text('Last Name'),
-        const TextField(
+        TextField(
+            onChanged: (value) {
+              setState(() {
+                lastName = value;
+              });
+            },
             decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter your last name',
-        )),
+              border: OutlineInputBorder(),
+              hintText: 'Enter your last name',
+            )),
         const Text('Email id'),
-        const TextField(
+        TextField(
+            onChanged: (value) {
+              setState(() {
+                emailID = value;
+              });
+            },
             decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter a valid email id',
-        )),
+              border: OutlineInputBorder(),
+              hintText: 'Enter a valid email id',
+            )),
         const Text('Phone Number'),
-        const TextField(
+        TextField(
+            onChanged: (value) {
+              setState(() {
+                phoneNumber = value;
+              });
+            },
             decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter your phone number',
-        )),
+              border: OutlineInputBorder(),
+              hintText: 'Enter your phone number',
+            )),
         const Text('Enter city preferences'),
         const Text('1st Preference'),
         const TextField(
@@ -83,8 +109,15 @@ class AddPerson extends State<AddPersonPage> {
           hintText: 'e.g Goa',
         )),
         ElevatedButton(
-            onPressed: (() => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const HomePage()))),
+            onPressed: (() {
+              DataController(context).addPerson(Person(
+                  firstName: firstName,
+                  lastName: lastName,
+                  email: emailID,
+                  phone: phoneNumber));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            }),
             child: const Text('Submit')),
       ]),
     );
