@@ -29,4 +29,3 @@ class PersonLikesCitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PersonLikesCity
         fields = ['url', 'person', 'city']
-

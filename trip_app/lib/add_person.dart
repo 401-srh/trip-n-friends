@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:trip_app/home_page.dart';
+import 'models/city.dart';
+import 'models/person.dart';
 
-class AddPersonPage extends StatelessWidget {
-  const AddPersonPage({super.key});
+List user_info = [
+  'A likes Tokyo, Sydney',
+  'B likes Edmonton, Toronto',
+  'C likes Montreal, Vancourver'
+];
 
+//List user_info = [];
+List<Person> person_list = [
+  Person(firstName: "Han", lastName: "Yan"),
+  Person(firstName: "Rajan", lastName: "Maghera"),
+];
+
+City tokyo = City(cityName: "Tokyo", country: "Japan");
+City edm = City(cityName: "Edmonton", country: "Canada");
+City syd = City(cityName: "Sydney", country: "Australia");
+
+List<List<City>> liked_cities = [
+  [tokyo, syd],
+  [tokyo, edm]
+];
+
+TextEditingController _controller = TextEditingController();
+
+class AddPersonPage extends StatefulWidget {
+  const AddPersonPage({Key? key}) : super(key: key);
+  AddPerson createState() => AddPerson();
+}
+
+class AddPerson extends State<AddPersonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
