@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_app/location_controller.dart';
 
 import 'add_person.dart';
 import 'list_of_people.dart';
@@ -28,8 +29,15 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => const ListOfPeople()))),
               child: const Text('List of People')),
+          OutlinedButton(
+              onPressed: (() => getLocation()),
+              child: const Text('Display Location'))
         ],
       )),
     );
   }
+}
+
+void getLocation() {
+  AppLocation().getLocation().then((value) => print(value));
 }
