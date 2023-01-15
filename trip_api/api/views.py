@@ -13,7 +13,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -22,7 +22,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class CityViewSet(viewsets.ModelViewSet):
     """
@@ -30,7 +30,7 @@ class CityViewSet(viewsets.ModelViewSet):
     """
     queryset = City.objects.all()
     serializer_class = CitySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class PersonViewSet(viewsets.ModelViewSet):
     """
@@ -38,7 +38,7 @@ class PersonViewSet(viewsets.ModelViewSet):
     """
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class PersonLikesCityViewSet(viewsets.ModelViewSet):
     """
@@ -46,12 +46,22 @@ class PersonLikesCityViewSet(viewsets.ModelViewSet):
     """
     queryset = PersonLikesCity.objects.all()
     serializer_class = PersonLikesCitySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
+class CitiesLikedByPersonViewSet(viewsets.ViewSet):
+
+    queryset = City.objects.all()
+    permission_classes = [permissions.AllowAny]
+
+    def retrieve(self, request, pk=None):
+        cities = City.objects.filter(personlikescity__person_id=pk)
+        serializer = CitySerializer(cities, many=True, context={'request': request})
+        return Response(serializer.data)
 
 class CloseToMeViewSet(viewsets.ViewSet):
 
     queryset = Person.objects.all()
+    permission_classes = [permissions.AllowAny]
 
     def retrieve(self, request, pk=None):
         person = get_object_or_404(self.queryset, pk=pk)

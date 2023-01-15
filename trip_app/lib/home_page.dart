@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_app/location_controller.dart';
+import 'package:trip_app/controllers/location_controller.dart';
 
 import 'add_person.dart';
 import 'list_of_people.dart';
