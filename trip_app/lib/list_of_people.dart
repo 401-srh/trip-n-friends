@@ -76,7 +76,6 @@ class _BasicListState extends State<BasicList> {
     return Center(
       child: Column(
         children: [
-          const Text('Basic List'),
           _person_list == null
               ? const CircularProgressIndicator()
               : Expanded(
