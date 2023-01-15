@@ -10,26 +10,26 @@ class ApiService {
   final BuildContext context;
   ApiService(this.context);
 
-  Future<void> _postApi(Uri url, dynamic body) async {
+  Future<dynamic> _postApi(Uri url, dynamic body) async {
     final response = await http.post(url, body: body);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to post item, code${response.statusCode}');
+    } else {
+      return jsonDecode(response.body);
     }
   }
 
   /// Call the API but show a snackbar if there is an error
-  Future<bool> _postApiWithFeedback(Uri uri, dynamic body) async {
+  Future<dynamic> _postApiWithFeedback(Uri uri, dynamic body) async {
     try {
-      await _postApi(uri, body);
-      return true;
+      return await _postApi(uri, body);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.toString()),
         ),
       );
-      return false;
     }
   }
 
@@ -99,9 +99,11 @@ class ApiService {
     return result;
   }
 
-  Future<bool> addPerson(Person person) async {
-    return await _postApiWithFeedback(
+  Future<int> addPerson(Person person) async {
+    final val = await _postApiWithFeedback(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.peopleEndpoint),
         person.toJson());
+    if (val == null) return -1;
+    return val["id"];
   }
 }

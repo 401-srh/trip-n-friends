@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_app/models/city.dart';
 
 import 'api_service.dart';
@@ -9,7 +10,9 @@ class DataController {
   DataController(this.context);
 
   Future<List<Person>> getPeopleCloseToMe() async {
-    return await ApiService(context).getPeopleCloseTo(2);
+    final prefs = await SharedPreferences.getInstance();
+    final myId = prefs.getInt('myId') ?? 1;
+    return await ApiService(context).getPeopleCloseTo(myId);
   }
 
   Future<List<City>> getCities() async {
@@ -21,10 +24,15 @@ class DataController {
   }
 
   Future<List<City>> getCitiesLikedByMe() async {
-    return await ApiService(context).getCitiesForPerson(2);
+    final prefs = await SharedPreferences.getInstance();
+    final myId = prefs.getInt('myId') ?? 1;
+    return await ApiService(context).getCitiesForPerson(myId);
   }
 
   Future<bool> addPerson(Person person) async {
-    return await ApiService(context).addPerson(person);
+    final id = await ApiService(context).addPerson(person);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('myId', id);
+    return id > 0;
   }
 }
