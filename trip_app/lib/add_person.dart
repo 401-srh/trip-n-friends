@@ -22,13 +22,15 @@ City syd = City(cityName: "Sydney", country: "Australia");
 
 List<List<City>> liked_cities = [
   [tokyo, syd],
-  [tokyo, edm]
+  [tokyo, edm],
+  [tokyo, syd]
 ];
 
 TextEditingController _controller = TextEditingController();
 
 class AddPersonPage extends StatefulWidget {
   const AddPersonPage({Key? key}) : super(key: key);
+  @override
   AddPerson createState() => AddPerson();
 }
 
