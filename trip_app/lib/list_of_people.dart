@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:trip_app/controllers/data_controller.dart';
 import 'models/city.dart';
@@ -7,12 +9,13 @@ City tokyo = City(cityName: "Tokyo", country: "Japan");
 City edm = City(cityName: "Edmonton", country: "Canada");
 City syd = City(cityName: "Sydney", country: "Australia");
 
-List<List<City>> liked_cities = [
+List<List<City>> liked_cities_bad = [
   [tokyo, syd],
-  [tokyo, edm]
+  [tokyo, edm],
+  [tokyo, syd],
 ];
 
-List<Person> person_list = [
+List<Person> person_list_bad = [
   Person(firstName: "Han", lastName: "Yan"),
   Person(firstName: "Rajan", lastName: "Maghera"),
 ];
@@ -41,19 +44,26 @@ class BasicList extends StatefulWidget {
 }
 
 class _BasicListState extends State<BasicList> {
-  late List<Person>? _data = [];
-
-  void _getData(BuildContext context) async {
-    var userItems = await DataController(context).getPeopleCloseToMe();
-    setState(() {
-      _data = userItems;
-    });
-  }
+  late List<Person>? _person_list = [];
+  late List<List<City>> _liked_cities = [];
+  late final List<double> _distances = [];
 
   @override
   void initState() {
     super.initState();
     _getData(context);
+  }
+
+  void _getData(BuildContext context) async {
+    var userItems = await DataController(context).getPeopleCloseToMe();
+    List<List<City>> liked = [];
+    for (var user in userItems) {
+      liked.add(await DataController(context).getCitiesLikedBy(user));
+    }
+    setState(() {
+      _person_list = userItems;
+      _liked_cities = liked;
+    });
   }
 
   @override
@@ -62,14 +72,14 @@ class _BasicListState extends State<BasicList> {
       child: Column(
         children: [
           const Text('Basic List'),
-          _data == null
+          _person_list == null
               ? const CircularProgressIndicator()
               : Expanded(
                   child: ListView.builder(
-                  itemCount: person_list.length,
+                  itemCount: _person_list!.length,
                   itemBuilder: (context, index) {
                     List<String> cityLists = [];
-                    for (var cityList in liked_cities) {
+                    for (var cityList in _liked_cities) {
                       String finalList = "";
                       for (var city in cityList) {
                         finalList += "${city.cityName}, ${city.country} | ";
@@ -84,11 +94,12 @@ class _BasicListState extends State<BasicList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${person_list[index].firstName} ${person_list[index].lastName}",
-                            style: TextStyle(
+                            "${_person_list![index].id}: ${_person_list![index].firstName} ${_person_list![index].lastName}",
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          Text("Liked cities: | ${cityLists[index]}")
+                          Text(
+                              "${_distances[index]} km | Liked cities: | ${cityLists[index]}")
                         ],
                       ),
                     ));
@@ -98,4 +109,13 @@ class _BasicListState extends State<BasicList> {
       ),
     );
   }
+}
+
+double calculateDistance(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;
+  var c = cos;
+  var a = 0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+  return 12742 * asin(sqrt(a));
 }
