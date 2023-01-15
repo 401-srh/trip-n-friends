@@ -26,6 +26,7 @@ router.register(r'people', views.PersonViewSet)
 router.register(r'cities', views.CityViewSet)
 router.register(r'likes', views.PersonLikesCityViewSet)
 router.register(r'dist', views.CloseToMeViewSet)
+router.register(r'personcity', views.CitiesLikedByPersonViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
