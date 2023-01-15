@@ -64,14 +64,32 @@ class AddPerson extends State<AddPersonPage> {
             ),
             Expanded(
                 child: ListView.builder(
-              itemCount: user_info.length,
+              itemCount: person_list.length,
               itemBuilder: (context, index) {
+                List<String> cityLists = [];
+                for (var cityList in liked_cities) {
+                  String finalList = "";
+                  for (var city in cityList) {
+                    finalList += "${city.cityName}, ${city.country} | ";
+                  }
+                  cityLists.add(finalList);
+                }
+
                 return Card(
-                  child: ListTile(
-                    onTap: () {},
-                    title: Text(user_info[index]),
+                    child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${person_list[index].firstName} ${person_list[index].lastName}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text("Liked cities: | ${cityLists[index]}")
+                    ],
                   ),
-                );
+                ));
               },
             )),
           ],
